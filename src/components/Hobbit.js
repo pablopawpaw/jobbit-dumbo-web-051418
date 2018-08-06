@@ -4,7 +4,7 @@ import React from "react";
 const Hobbit = props => {
 
   return (
-    <div >
+    <div className='card'>
       <img alt={props.name} src={props.image_url} />
       <h3> Name: {props.name} </h3>
       <h3> Title: {props.title} </h3>
