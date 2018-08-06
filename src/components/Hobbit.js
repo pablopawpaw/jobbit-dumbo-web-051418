@@ -1,20 +1,28 @@
-
 import React from "react";
+import { selectHobbit } from '../actions'
+
+import { connect } from 'react-redux'
 
 const Hobbit = props => {
-
+  console.log(props)
   return (
-    <div className='card'>
-      <img alt={props.name} src={props.image_url} />
-      <h3> Name: {props.name} </h3>
-      <h3> Title: {props.title} </h3>
-      <h3> Field: {props.field} </h3>
-      <h3> Seniority: {props.seniority} </h3>
-      <h3> Position: {props.position} </h3>
-      <h3> Key Skill: {props.key_skill} </h3>
-      <h3> Employment Type: {props.employment_type} </h3>
+    <div style={props.selectedHobbit.id === props.hobbit.id ? {'border-color':'cyan'} : {'border-color':'red'}} className='card' onClick={() => props.selectHobbit(props.hobbit) }>
+      <img alt={props.hobbit.name} src={props.hobbit.image_url} />
+      <h3> Name: {props.hobbit.name} </h3>
+      <h3> Title: {props.hobbit.title} </h3>
+      <h3> Field: {props.hobbit.field} </h3>
+      <h3> Seniority: {props.hobbit.seniority} </h3>
+      <h3> Position: {props.hobbit.position} </h3>
+      <h3> Key Skill: {props.hobbit.key_skill} </h3>
+      <h3> Employment Type: {props.hobbit.employment_type} </h3>
     </div>
   );
 };
 
-export default Hobbit
+const mapStateToProps = (state) => {
+  return {
+    selectedHobbit: state.selectedHobbit
+  }
+}
+
+export default connect(mapStateToProps, { selectHobbit })(Hobbit)

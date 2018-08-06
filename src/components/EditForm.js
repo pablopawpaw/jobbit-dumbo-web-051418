@@ -1,24 +1,45 @@
-
 import React from "react";
-
+import { connect } from 'react-redux'
 
 class EditHobbit extends React.Component {
 
+  state = {
+    name: this.props.selectedHobbit.name,
+    title: this.props.selectedHobbit.title,
+    key_skill: this.props.selectedHobbit.key_skill
+  }
+
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.selectedHobbit.id !== this.props.selectedHobbit.id) {
+      this.setState ({
+        name: this.props.selectedHobbit.name,
+        title: this.props.selectedHobbit.title,
+        key_skill: this.props.selectedHobbit.key_skill
+      })
+    }
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
   render() {
-    console.log(this.props)
+    console.log(this.state)
     return (
       <div style={{ textAlign: "center" }}>
         <div> </div>
         <form >
-          <h5> Name: {'Hobbit you wish to edit name here'} </h5>
+          <h5> Name: {this.state.name} </h5>
           <label>
             Title
           </label>
-          <input name="title" value={'Hobbit you wish to edit title here'} />
+          <input name="title" value={this.state.title} onChange={this.handleChange}/>
           <label>
             Key Skill
           </label>
-          <input name="key_skill" value={'Hobbit you wish to edit key_skill here'}/>
+          <input name="key_skill" value={this.state.key_skill} onChange={this.handleChange}/>
           <input type="submit" />
         </form>
       </div>
@@ -26,5 +47,10 @@ class EditHobbit extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    selectedHobbit: state.selectedHobbit
+  }
+}
 
-export default EditHobbit
+export default connect(mapStateToProps)(EditHobbit)
