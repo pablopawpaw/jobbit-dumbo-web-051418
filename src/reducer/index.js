@@ -7,17 +7,30 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
 
     case 'LOAD_HOBBITS':
-    console.log(action)
     return {
       ...state,
       hobbits: action.payload.hobbits
     }
 
     case 'SELECT_HOBBIT':
-    console.log(action.payload.hobbit)
     return {
       ...state,
       selectedHobbit: action.payload.hobbit
+    }
+
+    case 'CHANGE_HOBBIT':
+    const hobbitToEdit = state.hobbits.find(hobbit => hobbit.id === action.payload.hobbit.id)
+    const indexOfHobbit = state.hobbits.indexOf(hobbitToEdit)
+    const edittedHobbits = [...state.hobbits]
+    const edittedHobbit = {
+      ...hobbitToEdit,
+      title: action.payload.hobbit.title,
+      key_skill: action.payload.hobbit.key_skill,
+    }
+    edittedHobbits.splice(indexOfHobbit, 1, edittedHobbit)
+    return {
+      ...state,
+      hobbits: edittedHobbits
     }
 
     default:

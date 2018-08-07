@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 const Hobbit = props => {
   console.log(props)
   return (
-    <div style={props.selectedHobbit.id === props.hobbit.id ? {'border-color':'cyan'} : {'border-color':'red'}} className='card' onClick={() => props.selectHobbit(props.hobbit) }>
+    <div style={props.selected ? {'borderColor':'cyan'} : {'borderColor':'red'}} className='card' onClick={() => props.selectHobbit(props.hobbit) }>
       <img alt={props.hobbit.name} src={props.hobbit.image_url} />
       <h3> Name: {props.hobbit.name} </h3>
       <h3> Title: {props.hobbit.title} </h3>
@@ -19,9 +19,10 @@ const Hobbit = props => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+  const selected = state.selectedHobbit.id === ownProps.hobbit.id
   return {
-    selectedHobbit: state.selectedHobbit
+    selected
   }
 }
 

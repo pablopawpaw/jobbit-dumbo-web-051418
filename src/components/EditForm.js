@@ -1,17 +1,20 @@
 import React from "react";
 import { connect } from 'react-redux'
+import { changeHobbit } from '../actions'
 
 class EditHobbit extends React.Component {
 
   state = {
-    name: this.props.selectedHobbit.name,
-    title: this.props.selectedHobbit.title,
-    key_skill: this.props.selectedHobbit.key_skill
+    id: 0,
+    name: '',
+    title: '',
+    key_skill: ''
   }
 
   componentDidUpdate = (prevProps) => {
     if (prevProps.selectedHobbit.id !== this.props.selectedHobbit.id) {
       this.setState ({
+        id: this.props.selectedHobbit.id,
         name: this.props.selectedHobbit.name,
         title: this.props.selectedHobbit.title,
         key_skill: this.props.selectedHobbit.key_skill
@@ -25,12 +28,17 @@ class EditHobbit extends React.Component {
     })
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault()
+    this.props.changeHobbit(this.state)
+
+  }
+
   render() {
-    console.log(this.state)
     return (
       <div style={{ textAlign: "center" }}>
         <div> </div>
-        <form >
+        <form onSubmit={this.handleSubmit}>
           <h5> Name: {this.state.name} </h5>
           <label>
             Title
@@ -53,4 +61,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(EditHobbit)
+export default connect(mapStateToProps, { changeHobbit })(EditHobbit)
